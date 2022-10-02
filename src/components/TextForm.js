@@ -10,7 +10,7 @@ export default function TextForm(props) {
 
     const handleLoClick = ()=>{ 
         let newText = text.toLowerCase();
-        setText(newText)
+        setText(newText);
         props.showAlert("Converted to lowercase!", "success");
     }
 
@@ -22,6 +22,28 @@ export default function TextForm(props) {
 
     const handleOnChange = (event)=>{
         setText(event.target.value) 
+    }
+
+    const handleReplaceTextOnChange = (event) => {
+        setReplaceObj(
+            {...replaceObj , replaceText : event.target.value}
+        )
+    }
+    
+    const handleWithTextOnChange = (event) => {
+        setReplaceObj(
+            {...replaceObj , withText : event.target.value}
+        )
+    }
+
+    const handleFindReplace = () => {
+        setFindAndReplace(true);
+    }
+    
+    const handleReplaceClick = () => {
+        let newText = text.replaceAll(replaceObj.replaceText,replaceObj.withText);
+        setText(newText);
+        setFindAndReplace(false);
     }
 
     // Credits: A
@@ -38,6 +60,9 @@ export default function TextForm(props) {
     }
 
     const [text, setText] = useState(''); 
+    const [findAndReplace, setFindAndReplace] = useState(false);
+    const [replaceObj,setReplaceObj]=useState({replaceText:"",withText:""});
+
     // text = "new text"; // Wrong way to change the state
     // setText("new text"); // Correct way to change the state
     return (
@@ -52,6 +77,15 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
+
+            { findAndReplace && 
+                <div style={{display : 'flex', width : '200px',flexWrap: 'wrap'}}>
+                    <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph'/>
+                    <input type="text" onChange={handleWithTextOnChange} className="form-control my-1" placeholder='Replace word with'/>
+                    <button className="btn btn-primary mx-1 mb-1 margin-top" onClick={handleReplaceClick}>Replace Instance</button>
+                </div>
+            }
         </div>
         <div className="container my-3" style={{color: props.mode==='dark'?'white':'#042743'}}>
             <h2>Your text summary</h2>
