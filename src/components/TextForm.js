@@ -59,6 +59,20 @@ export default function TextForm(props) {
         props.showAlert("Extra spaces removed!", "success");
     }
 
+    //added by- codewithnick
+    const captializeFirstWord = () => {
+        //split sentence into words
+        const arr = text.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+            //capitalise first char of every word
+        }
+        //rejoin words
+        const newText = arr.join(" ");
+        setText(newText);
+        props.showAlert("Capitalised first word!", "success");
+    }
+
     const [text, setText] = useState(''); 
     const [findAndReplace, setFindAndReplace] = useState(false);
     const [replaceObj,setReplaceObj]=useState({replaceText:"",withText:""});
