@@ -72,6 +72,12 @@ export default function TextForm(props) {
         setText(newText);
         props.showAlert("Capitalised first word!", "success");
     }
+    const addLineBreak = () => {
+        //replace with line breaks
+        let newText=text.replaceAll("?","?\n").replaceAll("!","!\n").replaceAll(".",".\n");
+        setText(newText);
+        props.showAlert("Added Line breaks!", "success");
+    }
 
     const [text, setText] = useState(''); 
     const [findAndReplace, setFindAndReplace] = useState(false);
@@ -93,6 +99,7 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
             { findAndReplace && 
                 <div style={{display : 'flex', width : '200px',flexWrap: 'wrap'}}>
                     <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph'/>
