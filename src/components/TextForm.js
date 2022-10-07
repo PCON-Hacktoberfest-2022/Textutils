@@ -59,6 +59,20 @@ export default function TextForm(props) {
         props.showAlert("Extra spaces removed!", "success");
     }
 
+    //added by- codewithnick
+    const captializeFirstWord = () => {
+        //split sentence into words
+        const arr = text.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+            //capitalise first char of every word
+        }
+        //rejoin words
+        const newText = arr.join(" ");
+        setText(newText);
+        props.showAlert("Capitalised first word!", "success");
+    }
+
     const [text, setText] = useState(''); 
     const [findAndReplace, setFindAndReplace] = useState(false);
     const [replaceObj,setReplaceObj]=useState({replaceText:"",withText:""});
@@ -78,7 +92,7 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
-
+            <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
             { findAndReplace && 
                 <div style={{display : 'flex', width : '200px',flexWrap: 'wrap'}}>
                     <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph'/>
