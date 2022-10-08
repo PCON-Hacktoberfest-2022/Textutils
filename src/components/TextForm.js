@@ -79,13 +79,6 @@ export default function TextForm(props) {
         props.showAlert("Text Pasted from Clipboard", "success");
     };  
 
-    // Credits: Coding Wala
-    const handleExtraSpaces = () => {
-        let newText = text.split(/[ ]+/);
-        setText(newText.join(" "));
-        props.showAlert("Extra spaces removed!", "success");
-    }
-
     //added by- codewithnick
     const captializeFirstWord = () => {
         //split sentence into words
