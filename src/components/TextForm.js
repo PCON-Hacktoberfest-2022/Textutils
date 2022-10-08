@@ -1,51 +1,74 @@
-import React, { useState } from 'react'
-
+import React, { useState } from "react";
 
 export default function TextForm(props) {
-    const handleUpClick = () => {
-        let newText = text.toUpperCase();
-        setText(newText)
-        props.showAlert("Converted to uppercase!", "success");
+  const handleUpClick = () => {
+    let newText = text.toUpperCase();
+    setText(newText);
+    props.showAlert("Converted to uppercase!", "success");
+  };
+
+  const handleLoClick = () => {
+    let newText = text.toLowerCase();
+    setText(newText);
+    props.showAlert("Converted to lowercase!", "success");
+  };
+
+  const handleClearClick = () => {
+    let newText = "";
+    setText(newText);
+    props.showAlert("Text Cleared!", "success");
+  };
+
+  const handlePunctuation = () => {
+    let newText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+    setText(newText.replace(/\s{2,}/g, " "));
+    props.showAlert("Punctuation Removed!", "success");
+  };
+
+  const handleOnChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleReplaceTextOnChange = (event) => {
+    setReplaceObj({ ...replaceObj, replaceText: event.target.value });
+  };
+
+  const handleWithTextOnChange = (event) => {
+    setReplaceObj({ ...replaceObj, withText: event.target.value });
+  };
+
+  const handleFindReplace = () => {
+    setFindAndReplace(true);
+  };
+
+  const handleReplaceClick = () => {
+    let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
+    setText(newText);
+    setFindAndReplace(false);
+  };
+
+  // Credits: A
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    props.showAlert("Copied to Clipboard!", "success");
+  };
+
+  // Credits: Coding Wala
+  const handleExtraSpaces = () => {
+    let newText = text.split(/[ ]+/);
+    setText(newText.join(" "));
+    props.showAlert("Extra spaces removed!", "success");
+  };
+
+  //added by- codewithnick
+  const captializeFirstWord = () => {
+    //split sentence into words
+    const arr = text.split(" ");
+    for (var i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+      //capitalise first char of every word
     }
 
-    const handleLoClick = () => {
-
-        let newText = text.toLowerCase();
-        setText(newText);
-        props.showAlert("Converted to lowercase!", "success");
-    }
-
-    const handleClearClick = () => {
-        let newText = '';
-        setText(newText);
-        props.showAlert("Text Cleared!", "success");
-    }
-
-    const handlePunctuation = () => {
-        let newText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-        setText(newText.replace(/\s{2,}/g, " "));
-        props.showAlert("Punctuation Removed!", "success");
-    }
-
-    const handleOnChange = (event) => {
-        setText(event.target.value)
-    }
-
-    const handleReplaceTextOnChange = (event) => {
-        setReplaceObj(
-            { ...replaceObj, replaceText: event.target.value }
-        )
-    }
-
-    const handleWithTextOnChange = (event) => {
-        setReplaceObj(
-            { ...replaceObj, withText: event.target.value }
-        )
-    }
-
-    const handleFindReplace = () => {
-        setFindAndReplace(true);
-    }
 
     const handleReplaceClick = () => {
         let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
@@ -58,6 +81,13 @@ export default function TextForm(props) {
         navigator.clipboard.writeText(text);
         props.showAlert("Copied to Clipboard!", "success");
     }
+    const handlePaste = () => {
+        setTimeout(async () => {
+            const text = await navigator.clipboard.readText();
+            setText(text);
+        }, 2000);
+        props.showAlert("Text Pasted from Clipboard", "success");
+    };  
 
     // Credits: Coding Wala
     const handleExtraSpaces = () => {
@@ -96,11 +126,25 @@ export default function TextForm(props) {
         msg.text = text;
         window.speechSynthesis.speak(msg);
       }
+
     const reverseText = () => {
       // reversing the string
       let newText = text.split("").reverse().join("");
       setText(newText);
       props.showAlert("Reversed the text!", "success");
+
+    const readTxt=(e)=>{
+        const file=e.target.files[0];
+        const reader=new FileReader();
+        reader.readAsText(file);
+        reader.onload=()=>{
+                setText(reader.result);
+        }
+        reader.onerror=()=>{
+            console.log('file error',reader.error)
+        }
+
+
     }
 
     const [text, setText] = useState('');
@@ -127,6 +171,7 @@ export default function TextForm(props) {
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
+                <button  className="btn btn-primary mx-1 my-1" onClick={handlePaste}>Paste Text</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
@@ -134,8 +179,13 @@ export default function TextForm(props) {
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
                 <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
+
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={reverseText}>Reverse Text</button>
                 
+
+                <input type="file" id="file-selector"  className="btn btn-primary  mx-2 my-2" onChange={readTxt} />
+
+
                 {findAndReplace &&
                     <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
                         <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph' />
@@ -153,4 +203,5 @@ export default function TextForm(props) {
             </div>
         </>
     )
+
 }
