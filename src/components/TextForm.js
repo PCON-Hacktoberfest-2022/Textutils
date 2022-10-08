@@ -70,13 +70,6 @@ export default function TextForm(props) {
     }
   };
 
-
-    const handleReplaceClick = () => {
-        let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
-        setText(newText);
-        setFindAndReplace(false);
-    }
-
     // Credits: A
     const handleCopy = () => {
         navigator.clipboard.writeText(text);
