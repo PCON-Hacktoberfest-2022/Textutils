@@ -96,6 +96,12 @@ export default function TextForm(props) {
         msg.text = text;
         window.speechSynthesis.speak(msg);
       }
+    const reverseText = () => {
+      // reversing the string
+      let newText = text.split("").reverse().join("");
+      setText(newText);
+      props.showAlert("Reversed the text!", "success");
+    };
 
     const [text, setText] = useState('');
     const [findAndReplace, setFindAndReplace] = useState(false);
@@ -128,6 +134,7 @@ export default function TextForm(props) {
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
                 <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={reverseText}>Reverse Text</button>
                 
                 {findAndReplace &&
                     <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
