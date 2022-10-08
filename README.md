@@ -1,6 +1,6 @@
 # Textutils
 
-Textutils gives you a way to analyze your text quickly and efficiently. Be it word count, character count ,converting to uppercase or anything.
+Textutils gives you a way to analyze your text quickly and efficiently. Be it word count, character count, converting to uppercase or anything.
 
 ## Local Setup: 
 
@@ -26,7 +26,7 @@ See CONTRIBUTING.md file to know how to create the PR and contribute to this rep
 ## Improvement Required:
 
 1. Make website UI more attractive.
-2. Add more functionality like find and replace the word, Capitalise first letter, changing text colour ,reverse text etc. 
+2. Add more functionality like find and replace the word, Capitalise first letter, changing text colour, reverse text etc. 
 3. Feel free to create an issue if you find any.
 
-## Happy Coding😊.
+## Happy Coding. 😊
