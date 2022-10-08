@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-export default function TextForm(props) {
+export default function TextForm(props) 
+{
   const handleUpClick = () => {
     let newText = text.toUpperCase();
     setText(newText);
@@ -95,7 +96,30 @@ export default function TextForm(props) {
         setText(newText.join(" "));
         props.showAlert("Extra spaces removed!", "success");
     }
-
+    const captializeFirstWordOfEverySentence = () => {
+    
+      let newText = text.split(/[ ]+/), str = "";
+  
+      // first remove extra spaces and then capitalize first letter of every new sentence
+      setText(newText.join(" "));
+      newText = newText.join(" ");
+  
+      // capitalize first letter of first sentence
+      str = newText.charAt(0).toUpperCase();
+  
+      // to capitalize first letter of rest of sentences
+      for (let i = 1; i < newText.length; i++) {
+        if (i > 1 && newText[i - 2] === "." && newText[i - 1] === " ") {
+          str += newText.charAt(i).toUpperCase();
+        } else if (newText[i - 1] === "\n") {
+          str += newText.charAt(i).toUpperCase();
+        } else {
+          str += newText.charAt(i);
+        }
+      }
+      setText(str);
+      props.showAlert("Capitalised first word of every sentence!", "success");
+    };
     //added by- codewithnick
     const captializeFirstWord = () => {
         //split sentence into words
@@ -126,21 +150,16 @@ export default function TextForm(props) {
         msg.text = text;
         window.speechSynthesis.speak(msg);
       }
-
+    
     const [text, setText] = useState('');
     const [findAndReplace, setFindAndReplace] = useState(false);
     const [replaceObj, setReplaceObj] = useState({ replaceText: "", withText: "" });
 
+  
     // text = "new text"; // Wrong way to change the state
     // setText("new text"); // Correct way to change the state
     return (
         <>
-
-       
-            
-         
-
-         
             <div className="container" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
                 <h1 className='mb-4'>{props.heading}</h1>
                 <div className="mb-3">
@@ -158,8 +177,8 @@ export default function TextForm(props) {
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
-                <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
-                
+                <button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWordOfEverySentence}> Captialize First Word Of Every Sentence</button>
                 {findAndReplace &&
                     <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
                         <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph' />
@@ -177,5 +196,5 @@ export default function TextForm(props) {
             </div>
         </>
     )
-
-}
+              }
+            }
