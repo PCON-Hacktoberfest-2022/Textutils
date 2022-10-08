@@ -1,51 +1,74 @@
-import React, { useState } from 'react'
-
+import React, { useState } from "react";
 
 export default function TextForm(props) {
-    const handleUpClick = () => {
-        let newText = text.toUpperCase();
-        setText(newText)
-        props.showAlert("Converted to uppercase!", "success");
+  const handleUpClick = () => {
+    let newText = text.toUpperCase();
+    setText(newText);
+    props.showAlert("Converted to uppercase!", "success");
+  };
+
+  const handleLoClick = () => {
+    let newText = text.toLowerCase();
+    setText(newText);
+    props.showAlert("Converted to lowercase!", "success");
+  };
+
+  const handleClearClick = () => {
+    let newText = "";
+    setText(newText);
+    props.showAlert("Text Cleared!", "success");
+  };
+
+  const handlePunctuation = () => {
+    let newText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+    setText(newText.replace(/\s{2,}/g, " "));
+    props.showAlert("Punctuation Removed!", "success");
+  };
+
+  const handleOnChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleReplaceTextOnChange = (event) => {
+    setReplaceObj({ ...replaceObj, replaceText: event.target.value });
+  };
+
+  const handleWithTextOnChange = (event) => {
+    setReplaceObj({ ...replaceObj, withText: event.target.value });
+  };
+
+  const handleFindReplace = () => {
+    setFindAndReplace(true);
+  };
+
+  const handleReplaceClick = () => {
+    let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
+    setText(newText);
+    setFindAndReplace(false);
+  };
+
+  // Credits: A
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    props.showAlert("Copied to Clipboard!", "success");
+  };
+
+  // Credits: Coding Wala
+  const handleExtraSpaces = () => {
+    let newText = text.split(/[ ]+/);
+    setText(newText.join(" "));
+    props.showAlert("Extra spaces removed!", "success");
+  };
+
+  //added by- codewithnick
+  const captializeFirstWord = () => {
+    //split sentence into words
+    const arr = text.split(" ");
+    for (var i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+      //capitalise first char of every word
     }
 
-    const handleLoClick = () => {
-
-        let newText = text.toLowerCase();
-        setText(newText);
-        props.showAlert("Converted to lowercase!", "success");
-    }
-
-    const handleClearClick = () => {
-        let newText = '';
-        setText(newText);
-        props.showAlert("Text Cleared!", "success");
-    }
-
-    const handlePunctuation = () => {
-        let newText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-        setText(newText.replace(/\s{2,}/g, " "));
-        props.showAlert("Punctuation Removed!", "success");
-    }
-
-    const handleOnChange = (event) => {
-        setText(event.target.value)
-    }
-
-    const handleReplaceTextOnChange = (event) => {
-        setReplaceObj(
-            { ...replaceObj, replaceText: event.target.value }
-        )
-    }
-
-    const handleWithTextOnChange = (event) => {
-        setReplaceObj(
-            { ...replaceObj, withText: event.target.value }
-        )
-    }
-
-    const handleFindReplace = () => {
-        setFindAndReplace(true);
-    }
 
     const handleReplaceClick = () => {
         let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
@@ -154,4 +177,5 @@ export default function TextForm(props) {
             </div>
         </>
     )
+
 }
