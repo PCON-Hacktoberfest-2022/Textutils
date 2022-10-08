@@ -20,7 +20,7 @@ export default function TextForm(props) {
   };
 
   const handlePunctuation = () => {
-    let newText = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+    let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
     setText(newText.replace(/\s{2,}/g, " "));
     props.showAlert("Punctuation Removed!", "success");
   };
