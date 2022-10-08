@@ -92,6 +92,7 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className={`btn btn-${props.mode} mx-1 my-1`} onClick={handleCopy}>Copy Text</button>
             <button disabled={text.length===0} className={`btn btn-${props.mode} mx-1 my-1`} onClick={handleExtraSpaces}>Remove Extra Spaces</button>
             <button disabled={text.length===0} className={`btn btn-${props.mode} mx-1 my-1`} onClick={handleFindReplace}>Find and Replace</button>
+            <button disabled={text.length===0} className={`btn btn-${props.mode} mx-1 my-1`} onClick={captializeFirstWord}>Captialize First Word</button>
 
             { findAndReplace && 
                 <div style={{display : 'flex', width : '200px',flexWrap: 'wrap'}}>
