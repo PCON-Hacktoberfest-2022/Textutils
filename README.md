@@ -29,4 +29,9 @@ See CONTRIBUTING.md file to know how to create the PR and contribute to this rep
 2. Add more functionality like find and replace the word, Capitalise first letter, changing text colour ,reverse text etc. 
 3. Feel free to create an issue if you find any.
 
+## Important:
+
+1. Refrain from changing old lines of code by adding or removing space ,adding semicolon etc which are unnecessary.Just add the new lines of code you have worked upon or made changes to.
+2. Please link your PR to an issue.
+
 ## Happy Coding😊.
