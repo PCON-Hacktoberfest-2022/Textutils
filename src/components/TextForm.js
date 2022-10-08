@@ -101,7 +101,7 @@ export default function TextForm(props) {
       let newText = text.split("").reverse().join("");
       setText(newText);
       props.showAlert("Reversed the text!", "success");
-    };
+    }
 
     const [text, setText] = useState('');
     const [findAndReplace, setFindAndReplace] = useState(false);
