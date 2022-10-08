@@ -63,7 +63,7 @@ export default function TextForm(props) {
             const text = await navigator.clipboard.readText();
             setText(text);
         }, 2000);
-        props.showAlert("Copied to Clipboard!", "success");
+        props.showAlert("Text Pasted from Clipboard", "success");
     };  
 
     // Credits: Coding Wala
