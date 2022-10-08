@@ -71,10 +71,6 @@ export default function TextForm(props) {
   };
 
     // Credits: A
-    const handleCopy = () => {
-        navigator.clipboard.writeText(text);
-        props.showAlert("Copied to Clipboard!", "success");
-    }
     const handlePaste = () => {
         setTimeout(async () => {
             const text = await navigator.clipboard.readText();
