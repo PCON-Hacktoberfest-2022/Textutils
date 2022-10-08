@@ -126,6 +126,18 @@ export default function TextForm(props) {
         msg.text = text;
         window.speechSynthesis.speak(msg);
       }
+    const readTxt=(e)=>{
+        const file=e.target.files[0];
+        const reader=new FileReader();
+        reader.readAsText(file);
+        reader.onload=()=>{
+                setText(reader.result);
+        }
+        reader.onerror=()=>{
+            console.log('file error',reader.error)
+        }
+
+    }
 
     const [text, setText] = useState('');
     const [findAndReplace, setFindAndReplace] = useState(false);
@@ -159,7 +171,8 @@ export default function TextForm(props) {
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
                 <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
                 <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
-                
+                <input type="file" id="file-selector"  className="btn btn-primary  mx-2 my-2" onChange={readTxt} />
+
                 {findAndReplace &&
                     <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
                         <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph' />
