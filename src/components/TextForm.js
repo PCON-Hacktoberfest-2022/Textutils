@@ -185,6 +185,12 @@ export default function TextForm(props) {
     setText(str);
     props.showAlert("Capitalised first word of every sentence!", "success");
   };
+  const reverseText = () => {
+    // reversing the string
+    let newText = text.split("").reverse().join("");
+    setText(newText);
+    props.showAlert("Reversed the text!", "success");
+  }
 
   const speak = () => {
     let msg = new SpeechSynthesisUtterance();
@@ -316,6 +322,7 @@ export default function TextForm(props) {
         >
           Speak
         </button>
+        <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={reverseText}>Reverse Text</button>
         <input type="file" id="file-selector"  className="btn btn-primary  mx-2 my-2" onChange={readTxt} />
         <button
           disabled={text.length === 0}
