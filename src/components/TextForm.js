@@ -215,6 +215,20 @@ export default function TextForm(props) {
       >
         <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleCopy}
+        >
+        <img src="https://img.icons8.com/windows/32/FFFFFF/documents.png" alt="copy"/>
+        </button>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={downloadFile}
+        >
+        <img src="https://img.icons8.com/windows/32/FFFFFF/download.png" alt="download"/>
+        </button>
           <textarea
             className="form-control"
             value={text}
@@ -247,13 +261,6 @@ export default function TextForm(props) {
           onClick={handleClearClick}
         >
           Clear Text
-        </button>
-        <button
-          disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
-          onClick={handleCopy}
-        >
-          Copy Text
         </button>
         <button className="btn btn-primary mx-1 my-1" onClick={handlePaste}>
           Paste Text
@@ -292,13 +299,6 @@ export default function TextForm(props) {
           onClick={removeLineBreak}
         >
           Remove Line Break
-        </button>
-        <button
-          disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
-          onClick={downloadFile}
-        >
-          Download file
         </button>
         <button
           disabled={text.length === 0}
