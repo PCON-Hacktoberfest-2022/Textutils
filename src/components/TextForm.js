@@ -121,6 +121,19 @@ export default function TextForm(props) {
     props.showAlert("Capitalised first word!", "success");
   };
 
+  const readTxt=(e)=>{
+    const file=e.target.files[0];
+    const reader=new FileReader();
+    reader.readAsText(file);
+    reader.onload=()=>{
+            setText(reader.result);
+    }
+    reader.onerror=()=>{
+        console.log('file error',reader.error)
+    }
+
+}
+
   const addLineBreak = () => {
     //replace with line breaks
     let newText = text
@@ -303,6 +316,7 @@ export default function TextForm(props) {
         >
           Speak
         </button>
+        <input type="file" id="file-selector"  className="btn btn-primary  mx-2 my-2" onChange={readTxt} />
         <button
           disabled={text.length === 0}
           className="btn btn-primary mx-1 my-1"
