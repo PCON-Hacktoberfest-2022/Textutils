@@ -96,6 +96,19 @@ export default function TextForm(props) {
     setText(newText);
     props.showAlert("Removed Line breaks!", "success");
   };
+  const downloadFile = () => {
+        //downloading file as txt 
+        //filename: myFile.txt
+        let filename="myFile.txt"
+        const element = document.createElement("a");
+        const file = new Blob([text],    
+                    {type: 'text/plain;charset=utf-8'});
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        document.body.appendChild(element);
+        element.click();
+    }
+
 
   const handleSentenceCase = () => {
     
@@ -151,6 +164,7 @@ export default function TextForm(props) {
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
+          <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={downloadFile}>Download file</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleSentenceCase}>Sentence Case</button>
           <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
