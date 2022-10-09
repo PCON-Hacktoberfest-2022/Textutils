@@ -219,6 +219,7 @@ export default function TextForm(props) {
           disabled={text.length === 0}
           className="btn btn-primary mx-1 my-1"
           onClick={handleCopy}
+          style={{float:"right"}}
         >
         <img src="https://img.icons8.com/windows/32/FFFFFF/documents.png" alt="copy"/>
         </button>
@@ -226,6 +227,7 @@ export default function TextForm(props) {
           disabled={text.length === 0}
           className="btn btn-primary mx-1 my-1"
           onClick={downloadFile}
+          style={{float:"right"}}
         >
         <img src="https://img.icons8.com/windows/32/FFFFFF/download.png" alt="download"/>
         </button>
