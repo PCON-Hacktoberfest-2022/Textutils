@@ -97,6 +97,30 @@ export default function TextForm(props) {
     props.showAlert("Removed Line breaks!", "success");
   };
 
+  const handleSentenceCase = () => {
+    
+    let newText = text.split(/[ ]+/), str = "";
+
+    // first remove extra spaces and then capitalize first letter of every new sentence
+    newText = newText.join(" ");
+
+    // capitalize first letter of first sentence
+    str = newText.charAt(0).toUpperCase();
+
+    // to capitalize first letter of rest of sentences
+    for (let i = 1; i < newText.length; i++) {
+      if (i > 1 && newText[i - 2] === "." && newText[i - 1] === " ") {
+        str += newText.charAt(i).toUpperCase();
+      } else if (newText[i - 1] === "\n") {
+        str += newText.charAt(i).toUpperCase();
+      } else {
+        str += newText.charAt(i);
+      }
+    }
+    setText(str);
+    props.showAlert("Capitalised first word of every sentence!", "success");
+  }  
+
   const speak = () => {
     let msg = new SpeechSynthesisUtterance();
     msg.text = text;
@@ -128,6 +152,7 @@ export default function TextForm(props) {
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={removeLineBreak}>Remove Line Break</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
+          <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleSentenceCase}>Sentence Case</button>
           <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
     
           {findAndReplace &&
