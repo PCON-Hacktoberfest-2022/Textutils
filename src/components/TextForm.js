@@ -26,6 +26,7 @@ export default function TextForm(props) {
     let newText = str.join("");
     // console.log(newText);
     setText(newText);
+    props.showAlert("Text Cases Toggled!", "success");
   };
 
   const handleClearClick = () => {
