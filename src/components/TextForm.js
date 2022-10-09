@@ -12,6 +12,22 @@ export default function TextForm(props) {
     setText(newText);
     props.showAlert("Converted to lowercase!", "success");
   };
+  
+  // toggle case: prabhat7k
+  const toggleCase = () => {
+    let str = text.split("");
+    for (let i = 0; i < str.length; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+            str[i] =  String.fromCharCode(str[i].charCodeAt(0) + 'a'.charCodeAt(0) - 'A'.charCodeAt(0));
+        else if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] =  String.fromCharCode(str[i].charCodeAt(0) + 'A'.charCodeAt(0) - 'a'.charCodeAt(0));
+    }
+    let newText = str.join("");
+    // console.log(newText);
+    setText(newText);
+    props.showAlert("Text Cases Toggled!", "success");
+  };
 
   const handleClearClick = () => {
     let newText = "";
@@ -168,6 +184,7 @@ export default function TextForm(props) {
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
           <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleSentenceCase}>Sentence Case</button>
           <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
+          <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={toggleCase}>Toggle Case</button>
     
           {findAndReplace &&
             <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
