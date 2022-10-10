@@ -40,3 +40,27 @@
 .blank{
   color: rgb(32, 8, 246);
 }
+.preview-heading{
+  text-align: center;
+  font-weight: 700;
+}
+.container{
+  text-align: center;
+  font-weight: 700;
+}
+.text-update{
+  font-weight: 500; 
+}
+.in-text-updt{
+  color: rgb(247, 124, 145);
+  font-weight: 700;
+  font-size: 1.25em;
+  margin: auto;
+}
+.preview-container{
+  box-shadow: 0 0 5px 2px var(--bs-blue);
+}
+.summ-heading{
+  width: 60%;
+  margin: auto;
+}
