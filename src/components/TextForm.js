@@ -205,6 +205,14 @@ export default function TextForm(props) {
     withText: "",
   });
 
+//   set the background color in light theme
+  if(props.mode === "light") {
+    document.body.style.backgroundColor = "rgb(134 222 250)";
+    console.log("White &" + props.mode);
+  } else {
+    console.log("Dark &" + props.mode);
+  }
+
   // text = "new text"; // Wrong way to change the state
   // setText("new text"); // Correct way to change the state
   return (
@@ -216,7 +224,7 @@ export default function TextForm(props) {
         <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
           <textarea
-            className="form-control"
+            className={`form-control ${props.mode}-theme-textarea`}
             value={text}
             onChange={handleOnChange}
             style={{
@@ -227,106 +235,107 @@ export default function TextForm(props) {
             rows="8"
           ></textarea>
         </div>
+        {/* When you add a new button then you have to write the  ${props.mode}-theme-button inside the className for styling*/}
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleUpClick}
         >
           Convert to Uppercase
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleLoClick}
         >
           Convert to Lowercase
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleClearClick}
         >
           Clear Text
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleCopy}
         >
           Copy Text
         </button>
-        <button className="btn btn-primary mx-1 my-1" onClick={handlePaste}>
+        <button className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={handlePaste}>
           Paste Text
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleExtraSpaces}
         >
           Remove Extra Spaces
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleFindReplace}
         >
           Find and Replace
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={captializeFirstWord}
         >
           Captialize First Word
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={addLineBreak}
         >
           Add Line Break
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={removeLineBreak}
         >
           Remove Line Break
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={downloadFile}
         >
           Download file
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handlePunctuation}
         >
           Remove Punctuation
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={handleSentenceCase}
         >
           Sentence Case
         </button>
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-2 my-2"
+                  className={`btn btn-primary mx-2 my-2 ${props.mode}-theme-button` }
           type="submit"
           onClick={speak}
         >
           Speak
         </button>
-        <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={reverseText}>Reverse Text</button>
-        <input type="file" id="file-selector"  className="btn btn-primary  mx-2 my-2" onChange={readTxt} />
+        <button disabled={text.length === 0} className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={reverseText}>Reverse Text</button>
+              <input type="file" id="file-selector" className={`btn btn-primary  mx-2 my-2 ${props.mode}-theme-button`} onChange={readTxt} />
         <button
           disabled={text.length === 0}
-          className="btn btn-primary mx-1 my-1"
+          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
           onClick={toggleCase}
         >
           Toggle Case

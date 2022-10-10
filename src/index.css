@@ -1,3 +1,54 @@
 .accordion-button::after {
     filter: invert(1);
 }
+
+* {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    font-weight: 200;
+    transform: font-weight, 2s;
+}
+
+.light-theme-textarea {
+    overflow: auto!important;
+    outline: none!important;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: #080812 7px 7px 8px 0px !important;
+}
+.dark-theme-textarea {
+    overflow: auto!important;
+    outline: none!important;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: #486278 3px 4px 5px 0px !important;
+}
+
+
+.dark-theme-button:disabled {
+    background-color: #0444a2 !important;
+    color: #a39e9e !important;
+    border-color: #8a8787 !important;
+    box-shadow: #94d0ff 3px 3px 6px 0px !important;
+}
+
+.light-theme-button:disabled {
+    background-color: #E5E5E5 !important;
+    color: #8a8787 !important;
+    box-shadow: #000000 4px 4px 6px 1px !important;
+
+}
+
+.dark-theme-button {
+    box-shadow: #c6cacd 3px 3px 6px 0px !important;
+}
+
+.light-theme-button {
+    box-shadow: #000000 4px 4px 6px 1px !important;
+}
