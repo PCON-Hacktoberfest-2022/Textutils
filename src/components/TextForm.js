@@ -124,9 +124,9 @@ export default function TextForm(props) {
                     </div>
                 }
             </div>
-                {/* added by Gautam2305 */}
 
             <div className="container my-3" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
+                {/* added by Gautam2305 */}
 
                 <section >
                 <h2 className='preview-heading'>Preview</h2>
