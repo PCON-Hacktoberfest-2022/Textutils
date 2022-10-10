@@ -23,7 +23,7 @@ function App() {
   const toggleMode = () => {
     if (mode === "light") {
       setMode("dark");
-      document.body.style.backgroundColor = '#0e0e10';
+      document.body.style.backgroundColor = '#170948';
       showAlert("Dark mode has been enabled", "success"); // it shows alert if dark mode is enabled
     } else {
       setMode("light");
@@ -35,7 +35,7 @@ function App() {
     <>
       <Router>
         <Navbar
-          title="TextUtils"
+          title="Text Utils"
           aboutText='About'
           mode={mode}
           toggleMode={toggleMode}
