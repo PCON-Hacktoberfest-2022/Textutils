@@ -219,6 +219,7 @@ export default function TextForm(props) {
             className={`custom-textarea ${props.mode === "dark" ? 'custom-textare__dark' : 'custom-textarea__light'}`}
             value={text}
             onChange={handleOnChange}
+            placeholder="Enter your story here...."
             // style={{
             //   backgroundColor: props.mode === "dark" ? "#13466e" : "white",
             //   color: props.mode === "dark" ? "white" : "#042743",

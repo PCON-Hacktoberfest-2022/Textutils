@@ -23,14 +23,17 @@ function App() {
   const toggleMode = () => {
     if (mode === "light") {
       setMode("dark");
-      document.body.style.backgroundColor = '#170948';
+      // document.body.style.backgroundColor = '#170948';
+      document.body.className = "body__dark";
       showAlert("Dark mode has been enabled", "success"); // it shows alert if dark mode is enabled
     } else {
       setMode("light");
-      document.body.style.backgroundColor = "white";
+      // document.body.style.backgroundColor = "white";
+      document.body.classList = "body__light";
       showAlert("Light mode has been enabled", "success");
     }
   }
+
   return (
     <>
       <Router>
@@ -51,7 +54,7 @@ function App() {
             <Route exact path="/">
               <TextForm
                 showAlert={showAlert}
-                heading="Try TextUtils - word counter, character counter, remove extra spaces"
+                heading="Text Utils - All in one place"
                 mode={mode}
               />
             </Route>

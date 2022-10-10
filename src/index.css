@@ -4,12 +4,24 @@
     filter: invert(1);
 }
 
+.navbar {
+    box-shadow: 0 2px 5px rgba(10, 10, 60, 0.3);
+}
+
 body {
     animation: gradient 12s ease infinite;
     height: 100vh;
 
     font-family: "Dosis", sans-serif;
     letter-spacing: 1px;
+}
+
+.body__light {
+    background-color: #c5eaff;
+}
+
+.body__dark {
+    background-color: #170948;
 }
 
 
@@ -25,31 +37,36 @@ body {
 
     font-size: 1.1em;
     letter-spacing: 1px;
-    transition: background 0.3s;
+    transition: all 0.3s;
     border: 2px solid transparent
 }
 
 .custom-textarea:hover {
     background-color: #4a7f9e66;
+    box-shadow: 0 0 10px blue;
 }
 
 .custom-textarea:focus {
     background-color: #4a7f9e66;
     border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 50px blue;
 }
 
 .custom-textarea__light {
     color: black;
-    background-color: #68a9cf57;
+    background-color: white;
+    box-shadow: 0 0 10px royalblue;
 }
 
 .custom-textarea__light:hover {
-    background-color: #68a9cf88;
+    box-shadow: 0 0 20px royalblue;
+    background-color: white;
 }
 
 .custom-textarea__light:focus {
     border: 2px solid #333;
-    background-color: #68a9cf88;
+    box-shadow: 0 0 50px royalblue;
+    background-color: white;
 }
 
 .custom-button {
@@ -85,6 +102,7 @@ body {
 
 .custom-button:hover {
     color: #fff;
+    box-shadow: 2px 2px 10px blue;
 }
 
 .custom-button:hover:after {
