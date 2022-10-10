@@ -99,43 +99,44 @@ export default function TextForm(props) {
     // setText("new text"); // Correct way to change the state
     return (
         <>
-            <div className="container" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
-                <h1 className='mb-4'>{props.heading}</h1>
-                <div className="mb-3">
-                    <textarea className="form-control" value={text} onChange={handleOnChange} style={{ backgroundColor: props.mode === 'dark' ? '#13466e' : 'white', color: props.mode === 'dark' ? 'white' : '#042743' }} id="myBox" rows="8"></textarea>
+            <div class="container" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
+                <h1 class='mb-4'>{props.heading}</h1>
+                <div class="mb-3">
+                    <textarea class="form-control" value={text} onChange={handleOnChange} style={{ backgroundColor: props.mode === 'dark' ? '#13466e' : 'white', color: props.mode === 'dark' ? 'white' : '#042743' }} id="myBox" rows="8"></textarea>
 
                 </div>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
-                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
-                <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleLoClick}>Convert to Lowercase</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handleFindReplace}>Find and Replace</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={captializeFirstWord}>Captialize First Word</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={addLineBreak}>Add Line Break</button>
+                <button disabled={text.length === 0} class="btn btn-primary mx-1 my-1" onClick={handlePunctuation}>Remove Punctuation</button>
+                <button disabled={text.length===0} class="btn btn-primary mx-2 my-2" type="submit" onClick={speak}  >Speak</button>
                 
                 {findAndReplace &&
                     <div style={{ display: 'flex', width: '200px', flexWrap: 'wrap' }}>
-                        <input type="text" onChange={handleReplaceTextOnChange} className="form-control my-1" placeholder='Word in paragraph' />
-                        <input type="text" onChange={handleWithTextOnChange} className="form-control my-1" placeholder='Replace word with' />
-                        <button className="btn btn-primary mx-1 mb-1 margin-top" onClick={handleReplaceClick}>Replace Instance</button>
+                        <input type="text" onChange={handleReplaceTextOnChange} class="form-control my-1" placeholder='Word in paragraph' />
+                        <input type="text" onChange={handleWithTextOnChange} class="form-control my-1" placeholder='Replace word with' />
+                        <button class="btn btn-primary mx-1 mb-1 margin-top" onClick={handleReplaceClick}>Replace Instance</button>
                     </div>
                 }
             </div>
+                
 
-            <div className="container my-3" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
+            <div class="container my-3" style={{ color: props.mode === 'dark' ? 'white' : '#042743' }}>
+                
                 {/* added by Gautam2305 */}
-
                 <section >
-                <h2 className='preview-heading'>Preview</h2>
-                <p className='preview-container form-control'>{text.length > 0 ? text : "Nothing to preview!"}</p>
+                <h2 class='preview-heading'>Preview</h2>
+                <p class='preview-container form-control'>{text.length > 0 ? text : "Nothing to preview!"}</p>
                 </section>
                 
-                <h3 className='preview-heading summ-heading'>Your text summary</h3>
-                <p className='text-update in-text-updt'>{text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words with {text.length} characters</p>
-                <p className='text-update'><span className='in-text-updt'>{0.008 * text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} Minutes read</span></p>
+                <h3 class='preview-heading summ-heading'>Your text summary</h3>
+                <p class='text-update in-text-updt'>{text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words with {text.length} characters</p>
+                <p class='text-update'><span class='in-text-updt'>{0.008 * text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} Minutes read</span></p>
                 
             </div>
         </>
