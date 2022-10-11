@@ -110,7 +110,7 @@ body {
     width: 100%;
 }
 
-.custom-button:active {
+.custom-button:enabled:active {
     top: 2px;
 }
 
@@ -131,6 +131,7 @@ body {
 .preview__light {
     color: black;
     background-color: #68a9cf89;
+    box-shadow: #787373 5px 5px 8px;
 }
 
 .navbar-brand {
@@ -138,4 +139,21 @@ body {
     font-weight: 600;
     font-size: 1.5em;
     margin: 0 2rem;
+}
+
+/* Styling for all heading */
+.heading-light {
+    font-weight: bold;
+    text-shadow: #16054d 3px 2px 2px;
+    transition: all 0.3s ease;
+}
+
+.heading-dark {
+    font-weight: bold;
+    text-shadow: #e1d9ff 3px 3px 2px;
+    transition: all 0.3s ease;
+}
+
+.boldText {
+    font-weight: bold;
 }
