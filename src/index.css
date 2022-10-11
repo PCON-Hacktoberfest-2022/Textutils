@@ -16,17 +16,18 @@
 }
 
 .light-theme-textarea {
-    overflow: auto!important;
-    outline: none!important;
-    -webkit-box-shadow: none!important;
-    -moz-box-shadow: none!important;
+    overflow: auto !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
     box-shadow: #080812 7px 7px 8px 0px !important;
 }
+
 .dark-theme-textarea {
-    overflow: auto!important;
-    outline: none!important;
-    -webkit-box-shadow: none!important;
-    -moz-box-shadow: none!important;
+    overflow: auto !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
     box-shadow: #486278 3px 4px 5px 0px !important;
 }
 

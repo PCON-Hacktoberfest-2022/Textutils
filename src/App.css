@@ -32,11 +32,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.blank{
+.blank {
   color: rgb(32, 8, 246);
 }

@@ -1,392 +1,391 @@
 import React, { useState } from "react";
 
 export default function TextForm(props) {
-  const handleUpClick = () => {
-    let newText = text.toUpperCase();
-    setText(newText);
-    props.showAlert("Converted to uppercase!", "success");
-  };
+    const handleUpClick = () => {
+        let newText = text.toUpperCase();
+        setText(newText);
+        props.showAlert("Converted to uppercase!", "success");
+    };
 
-  const handleLoClick = () => {
-    let newText = text.toLowerCase();
-    setText(newText);
-    props.showAlert("Converted to lowercase!", "success");
-  };
+    const handleLoClick = () => {
+        let newText = text.toLowerCase();
+        setText(newText);
+        props.showAlert("Converted to lowercase!", "success");
+    };
 
-  // toggle case: prabhat7k
-  const toggleCase = () => {
-    let str = text.split("");
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] >= "A" && str[i] <= "Z")
-        str[i] = String.fromCharCode(
-          str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0),
-        );
-      else if (str[i] >= "a" && str[i] <= "z")
-        str[i] = String.fromCharCode(
-          str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0),
-        );
-    }
-    let newText = str.join("");
-    // console.log(newText);
-    setText(newText);
-    props.showAlert("Text Cases Toggled!", "success");
-  };
+    // toggle case: prabhat7k
+    const toggleCase = () => {
+        let str = text.split("");
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] >= "A" && str[i] <= "Z")
+                str[i] = String.fromCharCode(
+                    str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0),
+                );
+            else if (str[i] >= "a" && str[i] <= "z")
+                str[i] = String.fromCharCode(
+                    str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0),
+                );
+        }
+        let newText = str.join("");
+        // console.log(newText);
+        setText(newText);
+        props.showAlert("Text Cases Toggled!", "success");
+    };
 
-  const handleClearClick = () => {
-    let newText = "";
-    setText(newText);
-    props.showAlert("Text Cleared!", "success");
-  };
+    const handleClearClick = () => {
+        let newText = "";
+        setText(newText);
+        props.showAlert("Text Cleared!", "success");
+    };
 
-  const handlePunctuation = () => {
-    let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
-    setText(newText.replace(/\s{2,}/g, " "));
-    props.showAlert("Punctuation Removed!", "success");
-  };
+    const handlePunctuation = () => {
+        let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
+        setText(newText.replace(/\s{2,}/g, " "));
+        props.showAlert("Punctuation Removed!", "success");
+    };
 
-  const handleOnChange = (event) => {
-    setText(event.target.value);
-  };
+    const handleOnChange = (event) => {
+        setText(event.target.value);
+    };
 
-  const handleReplaceTextOnChange = (event) => {
-    setReplaceObj({ ...replaceObj, replaceText: event.target.value });
-  };
+    const handleReplaceTextOnChange = (event) => {
+        setReplaceObj({ ...replaceObj, replaceText: event.target.value });
+    };
 
-  const handleWithTextOnChange = (event) => {
-    setReplaceObj({ ...replaceObj, withText: event.target.value });
-  };
+    const handleWithTextOnChange = (event) => {
+        setReplaceObj({ ...replaceObj, withText: event.target.value });
+    };
 
-  const handleFindReplace = () => {
-    setFindAndReplace(true);
-  };
+    const handleFindReplace = () => {
+        setFindAndReplace(true);
+    };
 
-  const handleReplaceClick = () => {
-    let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
-    setText(newText);
-    setFindAndReplace(false);
-  };
+    const handleReplaceClick = () => {
+        let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
+        setText(newText);
+        setFindAndReplace(false);
+    };
 
-  // Credits: A
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    props.showAlert("Copied to Clipboard!", "success");
-  };
+    // Credits: A
+    const handleCopy = () => {
+        navigator.clipboard.writeText(text);
+        props.showAlert("Copied to Clipboard!", "success");
+    };
 
-  // Credits: Coding Wala
-  const handleExtraSpaces = () => {
-    let newText = text.split(/[ ]+/);
-    setText(newText.join(" "));
-    props.showAlert("Extra spaces removed!", "success");
-  };
+    // Credits: Coding Wala
+    const handleExtraSpaces = () => {
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "));
+        props.showAlert("Extra spaces removed!", "success");
+    };
 
-  // Credits: A
-  const handlePaste = () => {
-    setTimeout(async () => {
-      const text = await navigator.clipboard.readText();
-      setText(text);
-    }, 2000);
-    props.showAlert("Text Pasted from Clipboard", "success");
-  };
+    // Credits: A
+    const handlePaste = () => {
+        setTimeout(async () => {
+            const text = await navigator.clipboard.readText();
+            setText(text);
+        }, 2000);
+        props.showAlert("Text Pasted from Clipboard", "success");
+    };
 
-  //added by- codewithnick
-  const captializeFirstWord = () => {
-    //split sentence into words
-    // const arr = text.split(/[.\" "\n_]/);
-    const arr = text.split(" ");
-    for (var i = 0; i < arr.length; i++) {
-      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      //capitalise first char of every word
-    }
-    //rejoin words
-    const newText = arr.join(" ");
+    //added by- codewithnick
+    const captializeFirstWord = () => {
+        //split sentence into words
+        // const arr = text.split(/[.\" "\n_]/);
+        const arr = text.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+            //capitalise first char of every word
+        }
+        //rejoin words
+        const newText = arr.join(" ");
 
-    // check for new line
-    const arr2 = newText.split("\n");
-    console.log("array2", arr2);
-    for (var i = 0; i < arr2.length; i++) {
-      arr2[i] = arr2[i].charAt(0).toUpperCase() + arr2[i].slice(1);
-      //capitalise first char of every word
-    }
-    const newText2 = arr2.join("\n");
+        // check for new line
+        const arr2 = newText.split("\n");
+        console.log("array2", arr2);
+        for (var i = 0; i < arr2.length; i++) {
+            arr2[i] = arr2[i].charAt(0).toUpperCase() + arr2[i].slice(1);
+            //capitalise first char of every word
+        }
+        const newText2 = arr2.join("\n");
 
-    // check for punctuation
-    const arr3 = newText2.split(".");
-    for (var i = 0; i < arr3.length; i++) {
-      arr3[i] = arr3[i].charAt(0).toUpperCase() + arr3[i].slice(1);
-      //capitalise first char of every word
-    }
-    const newText3 = arr3.join(".");
+        // check for punctuation
+        const arr3 = newText2.split(".");
+        for (var i = 0; i < arr3.length; i++) {
+            arr3[i] = arr3[i].charAt(0).toUpperCase() + arr3[i].slice(1);
+            //capitalise first char of every word
+        }
+        const newText3 = arr3.join(".");
 
-    setText(newText3);
-    props.showAlert("Capitalised first word!", "success");
-  };
+        setText(newText3);
+        props.showAlert("Capitalised first word!", "success");
+    };
 
-  const readTxt=(e)=>{
-    const file=e.target.files[0];
-    const reader=new FileReader();
-    reader.readAsText(file);
-    reader.onload=()=>{
+    const readTxt = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => {
             setText(reader.result);
+        }
+        reader.onerror = () => {
+            console.log('file error', reader.error)
+        }
+
     }
-    reader.onerror=()=>{
-        console.log('file error',reader.error)
+
+    const addLineBreak = () => {
+        //replace with line breaks
+        let newText = text
+            .replaceAll("?", "?\n")
+            .replaceAll("!", "!\n")
+            .replaceAll(".", ".\n");
+        setText(newText);
+        props.showAlert("Added Line breaks!", "success");
+    };
+
+    const removeLineBreak = () => {
+        //replace with line breaks
+        let newText = text.replaceAll("\n", " ");
+        setText(newText);
+        props.showAlert("Removed Line breaks!", "success");
+    };
+    const downloadFile = () => {
+        //downloading file as txt
+        //filename: myFile.txt
+        let filename = "myFile.txt";
+        const element = document.createElement("a");
+        const file = new Blob([text], { type: "text/plain;charset=utf-8" });
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        document.body.appendChild(element);
+        element.click();
+    };
+
+    const handleSentenceCase = () => {
+        let newText = text.split(/[ ]+/),
+            str = "";
+
+        // first remove extra spaces and then capitalize first letter of every new sentence
+        newText = newText.join(" ");
+
+        // capitalize first letter of first sentence
+        str = newText.charAt(0).toUpperCase();
+
+        // to capitalize first letter of rest of sentences
+        for (let i = 1; i < newText.length; i++) {
+            if (i > 1 && newText[i - 2] === "." && newText[i - 1] === " ") {
+                str += newText.charAt(i).toUpperCase();
+            } else if (newText[i - 1] === "\n") {
+                str += newText.charAt(i).toUpperCase();
+            } else {
+                str += newText.charAt(i);
+            }
+        }
+        setText(str);
+        props.showAlert("Capitalised first word of every sentence!", "success");
+    };
+    const reverseText = () => {
+        // reversing the string
+        let newText = text.split("").reverse().join("");
+        setText(newText);
+        props.showAlert("Reversed the text!", "success");
     }
 
-}
+    const speak = () => {
+        let msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+    };
 
-  const addLineBreak = () => {
-    //replace with line breaks
-    let newText = text
-      .replaceAll("?", "?\n")
-      .replaceAll("!", "!\n")
-      .replaceAll(".", ".\n");
-    setText(newText);
-    props.showAlert("Added Line breaks!", "success");
-  };
+    const [text, setText] = useState("");
+    const [findAndReplace, setFindAndReplace] = useState(false);
+    const [replaceObj, setReplaceObj] = useState({
+        replaceText: "",
+        withText: "",
+    });
 
-  const removeLineBreak = () => {
-    //replace with line breaks
-    let newText = text.replaceAll("\n", " ");
-    setText(newText);
-    props.showAlert("Removed Line breaks!", "success");
-  };
-  const downloadFile = () => {
-    //downloading file as txt
-    //filename: myFile.txt
-    let filename = "myFile.txt";
-    const element = document.createElement("a");
-    const file = new Blob([text], { type: "text/plain;charset=utf-8" });
-    element.href = URL.createObjectURL(file);
-    element.download = filename;
-    document.body.appendChild(element);
-    element.click();
-  };
-
-  const handleSentenceCase = () => {
-    let newText = text.split(/[ ]+/),
-      str = "";
-
-    // first remove extra spaces and then capitalize first letter of every new sentence
-    newText = newText.join(" ");
-
-    // capitalize first letter of first sentence
-    str = newText.charAt(0).toUpperCase();
-
-    // to capitalize first letter of rest of sentences
-    for (let i = 1; i < newText.length; i++) {
-      if (i > 1 && newText[i - 2] === "." && newText[i - 1] === " ") {
-        str += newText.charAt(i).toUpperCase();
-      } else if (newText[i - 1] === "\n") {
-        str += newText.charAt(i).toUpperCase();
-      } else {
-        str += newText.charAt(i);
-      }
+    //   set the background color in light theme
+    if (props.mode === "light") {
+        document.body.style.backgroundColor = "rgb(134 222 250)";
+    } else {
+        document.body.style.backgroundColor = "black";
     }
-    setText(str);
-    props.showAlert("Capitalised first word of every sentence!", "success");
-  };
-  const reverseText = () => {
-    // reversing the string
-    let newText = text.split("").reverse().join("");
-    setText(newText);
-    props.showAlert("Reversed the text!", "success");
-  }
 
-  const speak = () => {
-    let msg = new SpeechSynthesisUtterance();
-    msg.text = text;
-    window.speechSynthesis.speak(msg);
-  };
-
-  const [text, setText] = useState("");
-  const [findAndReplace, setFindAndReplace] = useState(false);
-  const [replaceObj, setReplaceObj] = useState({
-    replaceText: "",
-    withText: "",
-  });
-
-//   set the background color in light theme
-  if(props.mode === "light") {
-    document.body.style.backgroundColor = "rgb(134 222 250)";
-    console.log("White &" + props.mode);
-  } else {
-    console.log("Dark &" + props.mode);
-  }
-
-  // text = "new text"; // Wrong way to change the state
-  // setText("new text"); // Correct way to change the state
-  return (
-    <>
-      <div
-        className="container"
-        style={{ color: props.mode === "dark" ? "white" : "#042743" }}
-      >
-        <h1 className="mb-4">{props.heading}</h1>
-        <div className="mb-3">
-          <textarea
-            className={`form-control ${props.mode}-theme-textarea`}
-            value={text}
-            onChange={handleOnChange}
-            style={{
-              backgroundColor: props.mode === "dark" ? "#13466e" : "white",
-              color: props.mode === "dark" ? "white" : "#042743",
-            }}
-            id="myBox"
-            rows="8"
-          ></textarea>
-        </div>
-        {/* When you add a new button then you have to write the  ${props.mode}-theme-button inside the className for styling*/}
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleUpClick}
-        >
-          Convert to Uppercase
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleLoClick}
-        >
-          Convert to Lowercase
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleClearClick}
-        >
-          Clear Text
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleCopy}
-        >
-          Copy Text
-        </button>
-        <button className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={handlePaste}>
-          Paste Text
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleExtraSpaces}
-        >
-          Remove Extra Spaces
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleFindReplace}
-        >
-          Find and Replace
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={captializeFirstWord}
-        >
-          Captialize First Word
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={addLineBreak}
-        >
-          Add Line Break
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={removeLineBreak}
-        >
-          Remove Line Break
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={downloadFile}
-        >
-          Download file
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handlePunctuation}
-        >
-          Remove Punctuation
-        </button>
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={handleSentenceCase}
-        >
-          Sentence Case
-        </button>
-        <button
-          disabled={text.length === 0}
-                  className={`btn btn-primary mx-2 my-2 ${props.mode}-theme-button` }
-          type="submit"
-          onClick={speak}
-        >
-          Speak
-        </button>
-        <button disabled={text.length === 0} className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={reverseText}>Reverse Text</button>
-              <input type="file" id="file-selector" className={`btn btn-primary  mx-2 my-2 ${props.mode}-theme-button`} onChange={readTxt} />
-        <button
-          disabled={text.length === 0}
-          className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
-          onClick={toggleCase}
-        >
-          Toggle Case
-        </button>
-
-        {findAndReplace && (
-          <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
-            <input
-              type="text"
-              onChange={handleReplaceTextOnChange}
-              className="form-control my-1"
-              placeholder="Word in paragraph"
-            />
-            <input
-              type="text"
-              onChange={handleWithTextOnChange}
-              className="form-control my-1"
-              placeholder="Replace word with"
-            />
-            <button
-              className="btn btn-primary mx-1 mb-1 margin-top"
-              onClick={handleReplaceClick}
+    // text = "new text"; // Wrong way to change the state
+    // setText("new text"); // Correct way to change the state
+    return (
+        <>
+            <div
+                className="container"
+                style={{ color: props.mode === "dark" ? "white" : "#042743" }}
             >
-              Replace Instance
-            </button>
-          </div>
-        )}
-      </div>
-      <div
-        className="container my-3"
-        style={{ color: props.mode === "dark" ? "white" : "#042743" }}
-      >
-        <h2>Your text summary</h2>
-        <p>
-          {
-            text.split(/\s+/).filter((element) => {
-              return element.length !== 0;
-            }).length
-          }{" "}
-          words and {text.length} characters
-        </p>
-        <p>
-          {0.008 *
-            text.split(/\s+/).filter((element) => {
-              return element.length !== 0;
-            }).length}{" "}
-          Minutes read
-        </p>
-        <h2>Preview</h2>
-        <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
-      </div>
-    </>
-  );
+                <h1 className="mb-4">{props.heading}</h1>
+                <div className="mb-3">
+                    <textarea
+                        className={`form-control ${props.mode}-theme-textarea`}
+                        value={text}
+                        onChange={handleOnChange}
+                        style={{
+                            backgroundColor: props.mode === "dark" ? "#13466e" : "white",
+                            color: props.mode === "dark" ? "white" : "#042743",
+                        }}
+                        id="myBox"
+                        rows="8"
+                    ></textarea>
+                </div>
+                {/* When you add a new button then you have to write the  ${props.mode}-theme-button inside the className for styling*/}
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleUpClick}
+                >
+                    Convert to Uppercase
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleLoClick}
+                >
+                    Convert to Lowercase
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleClearClick}
+                >
+                    Clear Text
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleCopy}
+                >
+                    Copy Text
+                </button>
+                <button className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={handlePaste}>
+                    Paste Text
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleExtraSpaces}
+                >
+                    Remove Extra Spaces
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleFindReplace}
+                >
+                    Find and Replace
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={captializeFirstWord}
+                >
+                    Captialize First Word
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={addLineBreak}
+                >
+                    Add Line Break
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={removeLineBreak}
+                >
+                    Remove Line Break
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={downloadFile}
+                >
+                    Download file
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handlePunctuation}
+                >
+                    Remove Punctuation
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={handleSentenceCase}
+                >
+                    Sentence Case
+                </button>
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-2 my-2 ${props.mode}-theme-button`}
+                    type="submit"
+                    onClick={speak}
+                >
+                    Speak
+                </button>
+                <button disabled={text.length === 0} className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={reverseText}>Reverse Text</button>
+                <input type="file" id="file-selector" className={`btn btn-primary  mx-2 my-2 ${props.mode}-theme-button`} onChange={readTxt} />
+                <button
+                    disabled={text.length === 0}
+                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    onClick={toggleCase}
+                >
+                    Toggle Case
+                </button>
+
+                {findAndReplace && (
+                    <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
+                        <input
+                            type="text"
+                            onChange={handleReplaceTextOnChange}
+                            className="form-control my-1"
+                            placeholder="Word in paragraph"
+                        />
+                        <input
+                            type="text"
+                            onChange={handleWithTextOnChange}
+                            className="form-control my-1"
+                            placeholder="Replace word with"
+                        />
+                        <button
+                            className="btn btn-primary mx-1 mb-1 margin-top"
+                            onClick={handleReplaceClick}
+                        >
+                            Replace Instance
+                        </button>
+                    </div>
+                )}
+            </div>
+            <div
+                className="container my-3"
+                style={{ color: props.mode === "dark" ? "white" : "#042743" }}
+            >
+                <h2>Your text summary</h2>
+                <p>
+                    {
+                        text.split(/\s+/).filter((element) => {
+                            return element.length !== 0;
+                        }).length
+                    }{" "}
+                    words and {text.length} characters
+                </p>
+                <p>
+                    {0.008 *
+                        text.split(/\s+/).filter((element) => {
+                            return element.length !== 0;
+                        }).length}{" "}
+                    Minutes read
+                </p>
+                <h2>Preview</h2>
+                <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
+            </div>
+        </>
+    );
 }
