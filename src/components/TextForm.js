@@ -316,7 +316,7 @@ export default function TextForm(props) {
           className="custom-button mx-1 my-1"
           onClick={captializeFirstWord}
         >
-          Captialize First Word
+          Capitalize First Word
         </button>
         <button
           disabled={text.length === 0}
