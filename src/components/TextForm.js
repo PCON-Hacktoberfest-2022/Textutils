@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 export default function TextForm(props) {
     const handleUpClick = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.toUpperCase();
         setText(newText);
         props.showAlert("Converted to uppercase!", "success");
     };
 
     const handleLoClick = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.toLowerCase();
         setText(newText);
         props.showAlert("Converted to lowercase!", "success");
@@ -15,15 +19,17 @@ export default function TextForm(props) {
 
     // toggle case: prabhat7k
     const toggleCase = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let str = text.split("");
         for (let i = 0; i < str.length; i++) {
             if (str[i] >= "A" && str[i] <= "Z")
                 str[i] = String.fromCharCode(
-                    str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0),
+                    str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0)
                 );
             else if (str[i] >= "a" && str[i] <= "z")
                 str[i] = String.fromCharCode(
-                    str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0),
+                    str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0)
                 );
         }
         let newText = str.join("");
@@ -33,12 +39,16 @@ export default function TextForm(props) {
     };
 
     const handleClearClick = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = "";
         setText(newText);
         props.showAlert("Text Cleared!", "success");
     };
 
     const handlePunctuation = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
         setText(newText.replace(/\s{2,}/g, " "));
         props.showAlert("Punctuation Removed!", "success");
@@ -61,6 +71,8 @@ export default function TextForm(props) {
     };
 
     const handleReplaceClick = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
         setText(newText);
         setFindAndReplace(false);
@@ -74,6 +86,8 @@ export default function TextForm(props) {
 
     // Credits: Coding Wala
     const handleExtraSpaces = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.split(/[ ]+/);
         setText(newText.join(" "));
         props.showAlert("Extra spaces removed!", "success");
@@ -81,6 +95,8 @@ export default function TextForm(props) {
 
     // Credits: A
     const handlePaste = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         setTimeout(async () => {
             const text = await navigator.clipboard.readText();
             setText(text);
@@ -90,6 +106,8 @@ export default function TextForm(props) {
 
     //added by- codewithnick
     const captializeFirstWord = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         //split sentence into words
         // const arr = text.split(/[.\" "\n_]/);
         const arr = text.split(" ");
@@ -127,14 +145,15 @@ export default function TextForm(props) {
         reader.readAsText(file);
         reader.onload = () => {
             setText(reader.result);
-        }
+        };
         reader.onerror = () => {
-            console.log('file error', reader.error)
-        }
-
-    }
+            console.log("file error", reader.error);
+        };
+    };
 
     const addLineBreak = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         //replace with line breaks
         let newText = text
             .replaceAll("?", "?\n")
@@ -145,6 +164,8 @@ export default function TextForm(props) {
     };
 
     const removeLineBreak = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         //replace with line breaks
         let newText = text.replaceAll("\n", " ");
         setText(newText);
@@ -163,6 +184,8 @@ export default function TextForm(props) {
     };
 
     const handleSentenceCase = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         let newText = text.split(/[ ]+/),
             str = "";
 
@@ -186,11 +209,13 @@ export default function TextForm(props) {
         props.showAlert("Capitalised first word of every sentence!", "success");
     };
     const reverseText = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
         // reversing the string
         let newText = text.split("").reverse().join("");
         setText(newText);
         props.showAlert("Reversed the text!", "success");
-    }
+    };
 
     const speak = () => {
         let msg = new SpeechSynthesisUtterance();
@@ -198,19 +223,34 @@ export default function TextForm(props) {
         window.speechSynthesis.speak(msg);
     };
 
+    const handleUndoText = () => {
+        redoTextHistory.push(text);
+        updateRedoTextHistory(redoTextHistory);
+        const lastText = undoTextHistory[undoTextHistory.length - 1];
+        undoTextHistory.pop();
+        updateUndoTextHistory(undoTextHistory);
+        setText(lastText);
+        props.showAlert("Successfully recovered your last text!", "success");
+    };
+
+    const handleRedoText = () => {
+        undoTextHistory.push(text);
+        updateUndoTextHistory(undoTextHistory);
+        const lastText = redoTextHistory[redoTextHistory.length - 1];
+        redoTextHistory.pop();
+        updateRedoTextHistory(redoTextHistory);
+        setText(lastText);
+        props.showAlert("Successfully recovered your last text!", "success");
+    };
+
+    const [redoTextHistory, updateRedoTextHistory] = useState([]);
+    const [undoTextHistory, updateUndoTextHistory] = useState([]);
     const [text, setText] = useState("");
     const [findAndReplace, setFindAndReplace] = useState(false);
     const [replaceObj, setReplaceObj] = useState({
         replaceText: "",
         withText: "",
     });
-
-    //   set the background color in light theme
-    if (props.mode === "light") {
-        document.body.style.backgroundColor = "rgb(134 222 250)";
-    } else {
-        document.body.style.backgroundColor = "black";
-    }
 
     // text = "new text"; // Wrong way to change the state
     // setText("new text"); // Correct way to change the state
@@ -220,125 +260,156 @@ export default function TextForm(props) {
                 className="container"
                 style={{ color: props.mode === "dark" ? "white" : "#042743" }}
             >
-                <h1 className="mb-4">{props.heading}</h1>
+                <h1 className={`mb-4 heading-${props.mode}`}>{props.heading}</h1>
                 <div className="mb-3">
                     <textarea
-                        className={`form-control ${props.mode}-theme-textarea`}
+                        className={`custom-textarea ${props.mode === "dark"
+                            ? "custom-textare__dark"
+                            : "custom-textarea__light"
+                            }`}
                         value={text}
                         onChange={handleOnChange}
-                        style={{
-                            backgroundColor: props.mode === "dark" ? "#13466e" : "white",
-                            color: props.mode === "dark" ? "white" : "#042743",
-                        }}
+                        placeholder="Enter your story here...."
+                        // style={{
+                        //   backgroundColor: props.mode === "dark" ? "#13466e" : "white",
+                        //   color: props.mode === "dark" ? "white" : "#042743",
+                        // }}
                         id="myBox"
                         rows="8"
                     ></textarea>
                 </div>
-                {/* When you add a new button then you have to write the  ${props.mode}-theme-button inside the className for styling*/}
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleUpClick}
                 >
                     Convert to Uppercase
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleLoClick}
                 >
                     Convert to Lowercase
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleClearClick}
                 >
                     Clear Text
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleCopy}
                 >
                     Copy Text
                 </button>
-                <button className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={handlePaste}>
+                <button className="custom-button mx-1 my-1" onClick={handlePaste}>
                     Paste Text
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleExtraSpaces}
                 >
                     Remove Extra Spaces
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleFindReplace}
                 >
                     Find and Replace
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={captializeFirstWord}
                 >
-                    Captialize First Word
+                    Capitalize First Word
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={addLineBreak}
                 >
                     Add Line Break
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={removeLineBreak}
                 >
                     Remove Line Break
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={downloadFile}
                 >
                     Download file
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handlePunctuation}
                 >
                     Remove Punctuation
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
                     onClick={handleSentenceCase}
                 >
                     Sentence Case
                 </button>
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-2 my-2 ${props.mode}-theme-button`}
+                    className="custom-button mx-2 my-2"
                     type="submit"
                     onClick={speak}
                 >
                     Speak
                 </button>
-                <button disabled={text.length === 0} className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`} onClick={reverseText}>Reverse Text</button>
-                <input type="file" id="file-selector" className={`btn btn-primary  mx-2 my-2 ${props.mode}-theme-button`} onChange={readTxt} />
                 <button
                     disabled={text.length === 0}
-                    className={`btn btn-primary mx-1 my-1 ${props.mode}-theme-button`}
+                    className="custom-button mx-1 my-1"
+                    onClick={reverseText}
+                >
+                    Reverse Text
+                </button>
+                <input
+                    type="file"
+                    id="file-selector"
+                    className="custom-button  mx-2 my-2"
+                    onChange={readTxt}
+                />
+                <button
+                    disabled={text.length === 0}
+                    className="custom-button mx-1 my-1"
                     onClick={toggleCase}
                 >
                     Toggle Case
                 </button>
+                <button
+                    disabled={undoTextHistory.length === 0}
+                    className="custom-button mx-1 my-1"
+                    type="submit"
+                    onClick={handleUndoText}
+                >
+                    Undo Text
+                </button>
+                <button
+                    disabled={redoTextHistory.length === 0}
+                    className="custom-button mx-1 my-1"
+                    type="submit"
+                    onClick={handleRedoText}
+                >
+                    Redo Text
+                </button>
+
 
                 {findAndReplace && (
                     <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
@@ -355,7 +426,7 @@ export default function TextForm(props) {
                             placeholder="Replace word with"
                         />
                         <button
-                            className="btn btn-primary mx-1 mb-1 margin-top"
+                            className="custom-button mx-1 mb-1 margin-top"
                             onClick={handleReplaceClick}
                         >
                             Replace Instance
@@ -367,24 +438,36 @@ export default function TextForm(props) {
                 className="container my-3"
                 style={{ color: props.mode === "dark" ? "white" : "#042743" }}
             >
-                <h2>Your text summary</h2>
+                <h2 className={`heading-${props.mode}`}>Your text summary</h2>
                 <p>
-                    {
-                        text.split(/\s+/).filter((element) => {
-                            return element.length !== 0;
-                        }).length
-                    }{" "}
-                    words and {text.length} characters
+                    <span className="boldText">
+                        {
+                            text.split(/\s+/).filter((element) => {
+                                return element.length !== 0;
+                            }).length
+                        }
+                    </span>
+
+                    {" "}
+                    words and <span className="boldText"> {text.length} </span>characters
                 </p>
                 <p>
-                    {0.008 *
-                        text.split(/\s+/).filter((element) => {
-                            return element.length !== 0;
-                        }).length}{" "}
+                    <span className="boldText">
+                        {0.008 *
+                            text.split(/\s+/).filter((element) => {
+                                return element.length !== 0;
+                            }).length}
+                    </span>
+                    {" "}
                     Minutes read
                 </p>
-                <h2>Preview</h2>
-                <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
+                <h2 className={`heading-${props.mode}`}>Preview</h2>
+                <div
+                    className={`preview ${props.mode === "dark" ? "preview__dark" : "preview__light"
+                        }`}
+                >
+                    {text.length > 0 ? text : "Nothing to preview!"}
+                </div>
             </div>
         </>
     );
