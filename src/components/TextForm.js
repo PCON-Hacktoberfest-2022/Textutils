@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.toUpperCase();
     setText(newText);
     props.showAlert("Converted to uppercase!", "success");
   };
 
   const handleLoClick = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.toLowerCase();
     setText(newText);
     props.showAlert("Converted to lowercase!", "success");
@@ -15,15 +19,17 @@ export default function TextForm(props) {
 
   // toggle case: prabhat7k
   const toggleCase = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let str = text.split("");
     for (let i = 0; i < str.length; i++) {
       if (str[i] >= "A" && str[i] <= "Z")
         str[i] = String.fromCharCode(
-          str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0),
+          str[i].charCodeAt(0) + "a".charCodeAt(0) - "A".charCodeAt(0)
         );
       else if (str[i] >= "a" && str[i] <= "z")
         str[i] = String.fromCharCode(
-          str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0),
+          str[i].charCodeAt(0) + "A".charCodeAt(0) - "a".charCodeAt(0)
         );
     }
     let newText = str.join("");
@@ -33,12 +39,16 @@ export default function TextForm(props) {
   };
 
   const handleClearClick = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = "";
     setText(newText);
     props.showAlert("Text Cleared!", "success");
   };
 
   const handlePunctuation = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
     setText(newText.replace(/\s{2,}/g, " "));
     props.showAlert("Punctuation Removed!", "success");
@@ -61,6 +71,8 @@ export default function TextForm(props) {
   };
 
   const handleReplaceClick = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
     setText(newText);
     setFindAndReplace(false);
@@ -74,6 +86,8 @@ export default function TextForm(props) {
 
   // Credits: Coding Wala
   const handleExtraSpaces = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
     props.showAlert("Extra spaces removed!", "success");
@@ -81,6 +95,8 @@ export default function TextForm(props) {
 
   // Credits: A
   const handlePaste = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     setTimeout(async () => {
       const text = await navigator.clipboard.readText();
       setText(text);
@@ -90,6 +106,8 @@ export default function TextForm(props) {
 
   //added by- codewithnick
   const captializeFirstWord = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     //split sentence into words
     // const arr = text.split(/[.\" "\n_]/);
     const arr = text.split(" ");
@@ -121,20 +139,21 @@ export default function TextForm(props) {
     props.showAlert("Capitalised first word!", "success");
   };
 
-  const readTxt=(e)=>{
-    const file=e.target.files[0];
-    const reader=new FileReader();
+  const readTxt = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
     reader.readAsText(file);
-    reader.onload=()=>{
-            setText(reader.result);
-    }
-    reader.onerror=()=>{
-        console.log('file error',reader.error)
-    }
-
-}
+    reader.onload = () => {
+      setText(reader.result);
+    };
+    reader.onerror = () => {
+      console.log("file error", reader.error);
+    };
+  };
 
   const addLineBreak = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     //replace with line breaks
     let newText = text
       .replaceAll("?", "?\n")
@@ -145,6 +164,8 @@ export default function TextForm(props) {
   };
 
   const removeLineBreak = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     //replace with line breaks
     let newText = text.replaceAll("\n", " ");
     setText(newText);
@@ -163,6 +184,8 @@ export default function TextForm(props) {
   };
 
   const handleSentenceCase = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     let newText = text.split(/[ ]+/),
       str = "";
 
@@ -186,11 +209,13 @@ export default function TextForm(props) {
     props.showAlert("Capitalised first word of every sentence!", "success");
   };
   const reverseText = () => {
+    textHistory.push(text);
+    updateTextHistory(textHistory);
     // reversing the string
     let newText = text.split("").reverse().join("");
     setText(newText);
     props.showAlert("Reversed the text!", "success");
-  }
+  };
 
   const speak = () => {
     let msg = new SpeechSynthesisUtterance();
@@ -198,6 +223,15 @@ export default function TextForm(props) {
     window.speechSynthesis.speak(msg);
   };
 
+  const handleUndoText = () => {
+    const lastText = textHistory[textHistory.length - 1];
+    textHistory.pop();
+    updateTextHistory(textHistory);
+    setText(lastText);
+    props.showAlert("Successfully recovered your last text!", "success");
+  };
+
+  const [textHistory, updateTextHistory] = useState([]);
   const [text, setText] = useState("");
   const [findAndReplace, setFindAndReplace] = useState(false);
   const [replaceObj, setReplaceObj] = useState({
@@ -216,7 +250,11 @@ export default function TextForm(props) {
         <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
           <textarea
-            className={`custom-textarea ${props.mode === "dark" ? 'custom-textare__dark' : 'custom-textarea__light'}`}
+            className={`custom-textarea ${
+              props.mode === "dark"
+                ? "custom-textare__dark"
+                : "custom-textarea__light"
+            }`}
             value={text}
             onChange={handleOnChange}
             placeholder="Enter your story here...."
@@ -323,14 +361,33 @@ export default function TextForm(props) {
         >
           Speak
         </button>
-        <button disabled={text.length === 0} className="custom-button mx-1 my-1" onClick={reverseText}>Reverse Text</button>
-        <input type="file" id="file-selector"  className="custom-button  mx-2 my-2" onChange={readTxt} />
+        <button
+          disabled={text.length === 0}
+          className="custom-button mx-1 my-1"
+          onClick={reverseText}
+        >
+          Reverse Text
+        </button>
+        <input
+          type="file"
+          id="file-selector"
+          className="custom-button  mx-2 my-2"
+          onChange={readTxt}
+        />
         <button
           disabled={text.length === 0}
           className="custom-button mx-1 my-1"
           onClick={toggleCase}
         >
           Toggle Case
+        </button>
+        <button
+          disabled={textHistory.length === 0}
+          className="custom-button mx-1 my-1"
+          type="submit"
+          onClick={handleUndoText}
+        >
+          Undo Text
         </button>
 
         {findAndReplace && (
@@ -377,7 +434,13 @@ export default function TextForm(props) {
           Minutes read
         </p>
         <h2>Preview</h2>
-        <div className={`preview ${props.mode === "dark" ? 'preview__dark':'preview__light'}`}>{text.length > 0 ? text : "Nothing to preview!"}</div>
+        <div
+          className={`preview ${
+            props.mode === "dark" ? "preview__dark" : "preview__light"
+          }`}
+        >
+          {text.length > 0 ? text : "Nothing to preview!"}
+        </div>
       </div>
     </>
   );
