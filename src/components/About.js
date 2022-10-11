@@ -21,7 +21,7 @@ export default function About(props) {
                     <strong>Analyze Your text </strong>
                     </button>
                     </h2>
-                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div className="accordion-body" style={myStyle}>
                     Textutils gives you a way to analyze your text quickly and efficiently. Be it word count, character count or 
 
