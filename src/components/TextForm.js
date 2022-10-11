@@ -2,16 +2,16 @@ import React, { useState } from "react";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.toUpperCase();
     setText(newText);
     props.showAlert("Converted to uppercase!", "success");
   };
 
   const handleLoClick = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.toLowerCase();
     setText(newText);
     props.showAlert("Converted to lowercase!", "success");
@@ -19,8 +19,8 @@ export default function TextForm(props) {
 
   // toggle case: prabhat7k
   const toggleCase = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let str = text.split("");
     for (let i = 0; i < str.length; i++) {
       if (str[i] >= "A" && str[i] <= "Z")
@@ -39,16 +39,16 @@ export default function TextForm(props) {
   };
 
   const handleClearClick = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = "";
     setText(newText);
     props.showAlert("Text Cleared!", "success");
   };
 
   const handlePunctuation = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.replace(/[.,\/#!?$%\^\*;:{}=\-_`~()]/g, "");
     setText(newText.replace(/\s{2,}/g, " "));
     props.showAlert("Punctuation Removed!", "success");
@@ -71,8 +71,8 @@ export default function TextForm(props) {
   };
 
   const handleReplaceClick = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.replaceAll(replaceObj.replaceText, replaceObj.withText);
     setText(newText);
     setFindAndReplace(false);
@@ -86,8 +86,8 @@ export default function TextForm(props) {
 
   // Credits: Coding Wala
   const handleExtraSpaces = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
     props.showAlert("Extra spaces removed!", "success");
@@ -95,8 +95,8 @@ export default function TextForm(props) {
 
   // Credits: A
   const handlePaste = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     setTimeout(async () => {
       const text = await navigator.clipboard.readText();
       setText(text);
@@ -106,8 +106,8 @@ export default function TextForm(props) {
 
   //added by- codewithnick
   const captializeFirstWord = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     //split sentence into words
     // const arr = text.split(/[.\" "\n_]/);
     const arr = text.split(" ");
@@ -152,8 +152,8 @@ export default function TextForm(props) {
   };
 
   const addLineBreak = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     //replace with line breaks
     let newText = text
       .replaceAll("?", "?\n")
@@ -164,8 +164,8 @@ export default function TextForm(props) {
   };
 
   const removeLineBreak = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     //replace with line breaks
     let newText = text.replaceAll("\n", " ");
     setText(newText);
@@ -184,8 +184,8 @@ export default function TextForm(props) {
   };
 
   const handleSentenceCase = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     let newText = text.split(/[ ]+/),
       str = "";
 
@@ -209,8 +209,8 @@ export default function TextForm(props) {
     props.showAlert("Capitalised first word of every sentence!", "success");
   };
   const reverseText = () => {
-    textHistory.push(text);
-    updateTextHistory(textHistory);
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
     // reversing the string
     let newText = text.split("").reverse().join("");
     setText(newText);
@@ -224,14 +224,27 @@ export default function TextForm(props) {
   };
 
   const handleUndoText = () => {
-    const lastText = textHistory[textHistory.length - 1];
-    textHistory.pop();
-    updateTextHistory(textHistory);
+    redoTextHistory.push(text);
+    updateRedoTextHistory(redoTextHistory);
+    const lastText = undoTextHistory[undoTextHistory.length - 1];
+    undoTextHistory.pop();
+    updateUndoTextHistory(undoTextHistory);
     setText(lastText);
     props.showAlert("Successfully recovered your last text!", "success");
   };
 
-  const [textHistory, updateTextHistory] = useState([]);
+  const handleRedoText = () => {
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
+    const lastText = redoTextHistory[redoTextHistory.length - 1];
+    redoTextHistory.pop();
+    updateRedoTextHistory(redoTextHistory);
+    setText(lastText);
+    props.showAlert("Successfully recovered your last text!", "success");
+  };
+
+  const [redoTextHistory, updateRedoTextHistory] = useState([]);
+  const [undoTextHistory, updateUndoTextHistory] = useState([]);
   const [text, setText] = useState("");
   const [findAndReplace, setFindAndReplace] = useState(false);
   const [replaceObj, setReplaceObj] = useState({
@@ -382,13 +395,22 @@ export default function TextForm(props) {
           Toggle Case
         </button>
         <button
-          disabled={textHistory.length === 0}
+          disabled={undoTextHistory.length === 0}
           className="custom-button mx-1 my-1"
           type="submit"
           onClick={handleUndoText}
         >
           Undo Text
         </button>
+        <button
+          disabled={redoTextHistory.length === 0}
+          className="custom-button mx-1 my-1"
+          type="submit"
+          onClick={handleRedoText}
+        >
+          Redo Text
+        </button>
+
 
         {findAndReplace && (
           <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
