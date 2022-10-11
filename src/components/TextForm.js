@@ -468,6 +468,7 @@ export default function TextForm(props) {
                 >
                     {text.length > 0 ? text : "Nothing to preview!"}
                 </div>
+                <br></br>
             </div>
         </>
     );

@@ -110,7 +110,7 @@ body {
     width: 100%;
 }
 
-.custom-button:active {
+.custom-button:enabled:active {
     top: 2px;
 }
 
@@ -131,6 +131,7 @@ body {
 .preview__light {
     color: black;
     background-color: #68a9cf89;
+    box-shadow: #787373 5px 5px 8px;
 }
 
 .navbar-brand {
