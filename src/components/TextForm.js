@@ -98,9 +98,9 @@ export default function TextForm(props) {
     textHistory.push(text);
     updateTextHistory(textHistory);
     setTimeout(async () => {
-      const text = await navigator.clipboard.readText();
-      setText(text);
-    }, 2000);
+      const textnew = await navigator.clipboard.readText();
+      setText(text + textnew);
+    }, 0);
     props.showAlert("Text Pasted from Clipboard", "success");
   };
 
