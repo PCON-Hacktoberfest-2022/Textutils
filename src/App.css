@@ -1,6 +1,3 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-
 .App {
   text-align: center;
 }
@@ -16,9 +13,6 @@
   }
 }
 
-.heading{
-  font-family: 'Indie Flower', cursive;
-}
 .App-header {
   font-family: 'Indie Flower', cursive;
   background-color: #282c34;
