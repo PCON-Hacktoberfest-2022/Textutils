@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ResumeIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
+import PauseIcon from '@mui/icons-material/PauseCircleOutlineOutlined';
 
 export default function TextForm(props) {
   const handleUpClick = () => {
@@ -218,9 +220,33 @@ export default function TextForm(props) {
   };
 
   const speak = () => {
-    let msg = new SpeechSynthesisUtterance();
-    msg.text = text;
-    window.speechSynthesis.speak(msg);
+    if (speechSynthesis.pending === true) {
+      speechSynthesis.cancel();
+    }
+
+    console.log(speechSynthesis);
+    if (speechSynthesis.speaking === true && speechSynthesis.paused === false) {
+      console.log("paused");
+      speechSynthesis.pause();
+      updateIsSpeaking(false);
+      return;
+    }
+    const msg = new SpeechSynthesisUtterance(text);
+    if (speechSynthesis.paused === true && speechSynthesis.speaking === true) {
+      console.log("resumed");
+      updateIsSpeaking(true);
+      speechSynthesis.resume();
+    } else {
+      console.log("speaking");
+      updateIsSpeaking(true);
+      speechSynthesis.speak(msg);
+    }
+    // when speaking is over
+
+    msg.addEventListener("end", () => {
+      updateIsSpeaking(false);
+      console.log("completed");
+    });
   };
 
   const handleUndoText = () => {
@@ -243,6 +269,7 @@ export default function TextForm(props) {
     props.showAlert("Successfully recovered your last text!", "success");
   };
 
+  const [isSpeaking, updateIsSpeaking] = useState(false);
   const [redoTextHistory, updateRedoTextHistory] = useState([]);
   const [undoTextHistory, updateUndoTextHistory] = useState([]);
   const [text, setText] = useState("");
@@ -372,7 +399,10 @@ export default function TextForm(props) {
           type="submit"
           onClick={speak}
         >
-          Speak
+          {isSpeaking ? "Pause ": "Speak "}
+          {isSpeaking && <PauseIcon/>}
+          {!isSpeaking && <ResumeIcon/>}
+          
         </button>
         <button
           disabled={text.length === 0}
@@ -410,7 +440,6 @@ export default function TextForm(props) {
         >
           Redo Text
         </button>
-
 
         {findAndReplace && (
           <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
