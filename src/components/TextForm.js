@@ -226,26 +226,28 @@ export default function TextForm(props) {
 
     console.log(speechSynthesis);
     if (speechSynthesis.speaking === true && speechSynthesis.paused === false) {
-      console.log("paused");
-      speechSynthesis.pause();
+      speechSynthesis.pause();    //   console.log("paused");
       updateIsSpeaking(false);
       return;
     }
     const msg = new SpeechSynthesisUtterance(text);
     if (speechSynthesis.paused === true && speechSynthesis.speaking === true) {
-      console.log("resumed");
+   //   console.log("resumed");
       updateIsSpeaking(true);
       speechSynthesis.resume();
     } else {
-      console.log("speaking");
+      speechSynthesis.cancel();
+    //  console.log("speaking");
       updateIsSpeaking(true);
       speechSynthesis.speak(msg);
     }
     // when speaking is over
 
     msg.addEventListener("end", () => {
+      speechSynthesis.cancel();
+     // console.log("cancelled");
       updateIsSpeaking(false);
-      console.log("completed");
+     // console.log("completed");
     });
   };
 
