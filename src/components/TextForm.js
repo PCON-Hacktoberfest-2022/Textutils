@@ -306,7 +306,7 @@ export default function TextForm(props) {
             // }}
             id="myBox"
             rows="8"
-          ></textarea>
+          spellCheck="true"></textarea>
         </div>
         <button
           disabled={text.length === 0}
