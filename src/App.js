@@ -5,6 +5,7 @@ import About from './components/About';
 import React, { useState } from 'react';
 import Alert from './components/Alert';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Footer } from './components/Footer';
 
 function App() {
   const [mode, setMode] = useState('light'); // Whether dark mode is enabled or not
@@ -61,6 +62,10 @@ function App() {
           </Switch>
         </div>
       </Router>
+      <Footer 
+        mode={mode}
+        toggleMode={toggleMode}
+      />
     </>
   );
 }
