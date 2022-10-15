@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ResumeIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
-import PauseIcon from '@mui/icons-material/PauseCircleOutlineOutlined';
+import ResumeIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
+import PauseIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
@@ -17,6 +17,36 @@ export default function TextForm(props) {
     let newText = text.toLowerCase();
     setText(newText);
     props.showAlert("Converted to lowercase!", "success");
+  };
+
+  const handleRemoveComma = () => {
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
+    let newText = "";
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] === ",") {
+        continue;
+      } else {
+        newText += text[i];
+      }
+    }
+    setText(newText);
+    props.showAlert("Removed Comma's !", "success");
+  };
+
+  const handleRemoveDecimal = () => {
+    undoTextHistory.push(text);
+    updateUndoTextHistory(undoTextHistory);
+    let newText = "";
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] === ".") {
+        continue;
+      } else {
+        newText += text[i];
+      }
+    }
+    setText(newText);
+    props.showAlert("Removed Decimal's !", "success");
   };
 
   // toggle case: prabhat7k
@@ -226,18 +256,18 @@ export default function TextForm(props) {
 
     console.log(speechSynthesis);
     if (speechSynthesis.speaking === true && speechSynthesis.paused === false) {
-      speechSynthesis.pause();    //   console.log("paused");
+      speechSynthesis.pause(); //   console.log("paused");
       updateIsSpeaking(false);
       return;
     }
     const msg = new SpeechSynthesisUtterance(text);
     if (speechSynthesis.paused === true && speechSynthesis.speaking === true) {
-   //   console.log("resumed");
+      //   console.log("resumed");
       updateIsSpeaking(true);
       speechSynthesis.resume();
     } else {
       speechSynthesis.cancel();
-    //  console.log("speaking");
+      //  console.log("speaking");
       updateIsSpeaking(true);
       speechSynthesis.speak(msg);
     }
@@ -245,9 +275,9 @@ export default function TextForm(props) {
 
     msg.addEventListener("end", () => {
       speechSynthesis.cancel();
-     // console.log("cancelled");
+      // console.log("cancelled");
       updateIsSpeaking(false);
-     // console.log("completed");
+      // console.log("completed");
     });
   };
 
@@ -306,7 +336,8 @@ export default function TextForm(props) {
             // }}
             id="myBox"
             rows="8"
-          spellCheck="true"></textarea>
+            spellCheck="true"
+          ></textarea>
         </div>
         <button
           disabled={text.length === 0}
@@ -401,10 +432,9 @@ export default function TextForm(props) {
           type="submit"
           onClick={speak}
         >
-          {isSpeaking ? "Pause ": "Speak "}
-          {isSpeaking && <PauseIcon/>}
-          {!isSpeaking && <ResumeIcon/>}
-          
+          {isSpeaking ? "Pause " : "Speak "}
+          {isSpeaking && <PauseIcon />}
+          {!isSpeaking && <ResumeIcon />}
         </button>
         <button
           disabled={text.length === 0}
@@ -441,6 +471,22 @@ export default function TextForm(props) {
           onClick={handleRedoText}
         >
           Redo Text
+        </button>
+        <button
+          disabled={text.length === 0}
+          className="custom-button mx-1 my-1"
+          type="submit"
+          onClick={handleRemoveComma}
+        >
+          Remove Comma
+        </button>
+        <button
+          disabled={text.length === 0}
+          className="custom-button mx-1 my-1"
+          type="submit"
+          onClick={handleRemoveDecimal}
+        >
+          Remove Decimal
         </button>
 
         {findAndReplace && (
@@ -493,7 +539,6 @@ export default function TextForm(props) {
           }`}
         >
           {text.length > 0 ? text : "Nothing to preview!"}
-  
         </div>
       </div>
     </>
