@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ResumeIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import PauseIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import axios from "axios";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
@@ -301,6 +303,25 @@ export default function TextForm(props) {
     props.showAlert("Successfully recovered your last text!", "success");
   };
 
+  const handleTranslation = async () => {
+    const data = {
+      q: text,
+      source: "en",
+      target: "hi",
+    };
+    try {
+      const translation = await axios.post(
+        "https://libretranslate.de/translate",
+        data
+      );
+      //console.log(translation.data.translatedText);
+      setTranslatedData(translation.data.translatedText);
+    } catch (error) {
+      console.log("Translation not occur");
+    }
+  };
+  const [translatedData, setTranslatedData] = useState("");
+
   const [isSpeaking, updateIsSpeaking] = useState(false);
   const [redoTextHistory, updateRedoTextHistory] = useState([]);
   const [undoTextHistory, updateUndoTextHistory] = useState([]);
@@ -489,6 +510,15 @@ export default function TextForm(props) {
           Remove Decimal
         </button>
 
+        <button
+          disabled={text.length === 0}
+          className="custom-button mx-1 my-1"
+          type="submit"
+          onClick={handleTranslation}
+        >
+          Translate into Hindi
+        </button>
+
         {findAndReplace && (
           <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
             <input
@@ -538,7 +568,12 @@ export default function TextForm(props) {
             props.mode === "dark" ? "preview__dark" : "preview__light"
           }`}
         >
-          {text.length > 0 ? text : "Nothing to preview!"}
+          {/* {text.length > 0 ? text : "Nothing to preview!"} */}
+          {translatedData.length > 0
+            ? translatedData
+            : text.length > 0
+            ? text
+            : "Nothing to preview!"}
         </div>
       </div>
     </>
