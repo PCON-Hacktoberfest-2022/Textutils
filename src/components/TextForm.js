@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ResumeIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import PauseIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
+import axios from "axios";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
@@ -76,6 +78,7 @@ export default function TextForm(props) {
     let newText = "";
     setText(newText);
     props.showAlert("Text Cleared!", "success");
+    setTranslatedData("");
   };
 
   const handlePunctuation = () => {
@@ -289,6 +292,7 @@ export default function TextForm(props) {
     updateUndoTextHistory(undoTextHistory);
     setText(lastText);
     props.showAlert("Successfully recovered your last text!", "success");
+    setTranslatedData("");
   };
 
   const handleRedoText = () => {
@@ -299,8 +303,33 @@ export default function TextForm(props) {
     updateRedoTextHistory(redoTextHistory);
     setText(lastText);
     props.showAlert("Successfully recovered your last text!", "success");
+    setTranslatedData("");
   };
 
+  const [language, setLanguage] = useState("hi");
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
+  const handleTranslation = async () => {
+    const data = {
+      q: text,
+      source: "en",
+      target: language,
+    };
+    try {
+      const translation = await axios.post(
+        "https://libretranslate.de/translate",
+        data
+      );
+      //console.log(translation.data.translatedText);
+      setTranslatedData(translation.data.translatedText);
+    } catch (error) {
+      console.log("Translation not occur");
+    }
+  };
+  const [translatedData, setTranslatedData] = useState("");
   const [isSpeaking, updateIsSpeaking] = useState(false);
   const [redoTextHistory, updateRedoTextHistory] = useState([]);
   const [undoTextHistory, updateUndoTextHistory] = useState([]);
@@ -488,7 +517,40 @@ export default function TextForm(props) {
         >
           Remove Decimal
         </button>
-
+        <div>
+          <button
+            disabled={text.length === 0}
+            className="custom-button mx-1 my-1"
+            type="submit"
+            onClick={handleTranslation}
+          >
+            Translate into
+          </button>
+          {/* //Dropdown */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Language</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={language}
+              label="language"
+              onChange={handleLanguageChange}
+            >
+              <MenuItem value="hi">
+                <em>Hindi</em>
+              </MenuItem>
+              <MenuItem value="ja">Japanese</MenuItem>
+              <MenuItem value="ru">Russian</MenuItem>
+              <MenuItem value="ar">Arabic</MenuItem>
+              <MenuItem value="zh">Chinese</MenuItem>
+              <MenuItem value="fr">French</MenuItem>
+              <MenuItem value="de">German</MenuItem>
+              <MenuItem value="es">Spanish</MenuItem>
+              <MenuItem value="ko">Korean</MenuItem>
+              <MenuItem value="el">Greek</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
         {findAndReplace && (
           <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
             <input
@@ -538,7 +600,12 @@ export default function TextForm(props) {
             props.mode === "dark" ? "preview__dark" : "preview__light"
           }`}
         >
-          {text.length > 0 ? text : "Nothing to preview!"}
+          {/* {text.length > 0 ? text : "Nothing to preview!"} */}
+          {translatedData.length > 0
+            ? translatedData
+            : text.length > 0
+            ? text
+            : "Nothing to preview!"}
         </div>
       </div>
     </>
