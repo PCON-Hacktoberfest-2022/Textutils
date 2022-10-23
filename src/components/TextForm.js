@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ResumeIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import PauseIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+
 import axios from "axios";
 
 export default function TextForm(props) {
@@ -78,6 +78,7 @@ export default function TextForm(props) {
     let newText = "";
     setText(newText);
     props.showAlert("Text Cleared!", "success");
+    setTranslatedData("");
   };
 
   const handlePunctuation = () => {
@@ -291,6 +292,7 @@ export default function TextForm(props) {
     updateUndoTextHistory(undoTextHistory);
     setText(lastText);
     props.showAlert("Successfully recovered your last text!", "success");
+    setTranslatedData("");
   };
 
   const handleRedoText = () => {
@@ -301,6 +303,7 @@ export default function TextForm(props) {
     updateRedoTextHistory(redoTextHistory);
     setText(lastText);
     props.showAlert("Successfully recovered your last text!", "success");
+    setTranslatedData("");
   };
 
   const handleTranslation = async () => {
@@ -321,7 +324,6 @@ export default function TextForm(props) {
     }
   };
   const [translatedData, setTranslatedData] = useState("");
-
   const [isSpeaking, updateIsSpeaking] = useState(false);
   const [redoTextHistory, updateRedoTextHistory] = useState([]);
   const [undoTextHistory, updateUndoTextHistory] = useState([]);
@@ -518,30 +520,30 @@ export default function TextForm(props) {
         >
           Translate into Hindi
         </button>
-
-        {findAndReplace && (
-          <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
-            <input
-              type="text"
-              onChange={handleReplaceTextOnChange}
-              className="form-control my-1"
-              placeholder="Word in paragraph"
-            />
-            <input
-              type="text"
-              onChange={handleWithTextOnChange}
-              className="form-control my-1"
-              placeholder="Replace word with"
-            />
-            <button
-              className="custom-button mx-1 mb-1 margin-top"
-              onClick={handleReplaceClick}
-            >
-              Replace Instance
-            </button>
-          </div>
-        )}
       </div>
+      {findAndReplace && (
+        <div style={{ display: "flex", width: "200px", flexWrap: "wrap" }}>
+          <input
+            type="text"
+            onChange={handleReplaceTextOnChange}
+            className="form-control my-1"
+            placeholder="Word in paragraph"
+          />
+          <input
+            type="text"
+            onChange={handleWithTextOnChange}
+            className="form-control my-1"
+            placeholder="Replace word with"
+          />
+          <button
+            className="custom-button mx-1 mb-1 margin-top"
+            onClick={handleReplaceClick}
+          >
+            Replace Instance
+          </button>
+        </div>
+      )}
+
       <div
         className="container my-3"
         style={{ color: props.mode === "dark" ? "white" : "#042743" }}
