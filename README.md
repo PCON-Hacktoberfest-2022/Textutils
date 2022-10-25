@@ -23,7 +23,7 @@ Textutils gives you a way to analyze your text quickly and efficiently. Be it wo
 
 See CONTRIBUTING.md file to know how to create the PR and contribute to this repo.
 
-## Improvement Required:
+## Improvement Required: 
 
 1. Make website UI more attractive.
 2. Add more functionality like find and replace the word, Capitalise first letter, changing text colour ,reverse text etc. 
